@@ -52,24 +52,23 @@ public class EmployeeController {
 
 
     @PostMapping("save")
-    public String save(@ModelAttribute Employee employee, @ModelAttribute User user){
+    public String save(Employee employee, User user){
         Boolean result;
-        Boolean result2;
 
         //service bisa pk 1 bisa 2, kalo 1 di siapin usernya di savenya
 
-        result = employeeService.save(employee);
+        result = employeeService.save(employee,user);
         
-        user.setId(employee.getId());
+        // user.setId(employee.getId());
         // role.setId(roleService.getIdByLevel());
         // user.setRole(role);
 
         
-        user.setRole(roleService.getIdByMaxLevel());
-        result2 = userService.save(user);
+        // user.setRole(roleService.getIdByMaxLevel());
+        // result2 = userService.save(user);
         
         
-        if(result && result2){
+        if(result){
             return "redirect:/employee";
         } else{
             return "employee/form";
