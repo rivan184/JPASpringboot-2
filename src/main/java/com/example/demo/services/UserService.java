@@ -12,4 +12,5 @@ public interface UserService {
     public User getById(Integer id);
     public Boolean save(User region);
     public Boolean delete(Integer id);
+    public Boolean updatePassword(String password, Integer id);
 }

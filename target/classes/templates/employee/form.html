@@ -8,6 +8,7 @@
             <form th:action="@{/employee/save}" method = "post">
                 <div class="form-group" hidden>
                     <label for="Id" class = "col-form-label">ID</label>
+                    <!-- employee dsini ambil dari model.addattribute di get, trs diterima oleh parameter di post-->
                     <input type="text" class = "form-control" id = "id" th:field="*{employee.id}">
                     <!-- id disini harus sesuai sama variabel di model bkn column id -->
                 </div>

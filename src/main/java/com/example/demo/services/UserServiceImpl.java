@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -39,5 +42,12 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
         return !userRepository.findById(id).isPresent();
     }
+
+    @Override
+    public Boolean updatePassword(String password, Integer id) {
+        userRepository.updatePassword(password, id);
+        return true;
+    }
+    
     
 }

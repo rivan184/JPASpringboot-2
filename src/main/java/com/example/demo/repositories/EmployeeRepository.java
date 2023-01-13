@@ -12,4 +12,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 
     @Query(value = "SELECT * FROM employee JOIN user ON employee.id = user.id WHERE employee.email = ?1 AND user.password = ?2", nativeQuery = true)
     Employee findAccount(String email, String password);
+
+    @Query(value = "SELECT id FROM employee WHERE email = ?",nativeQuery = true)
+    Integer getIdByEmail(String email);
+
 }

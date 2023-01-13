@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.model.Employee;
-import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.services.EmployeeService;
 import com.example.demo.services.RoleService;
@@ -35,20 +33,6 @@ public class EmployeeController {
         return "employee/index";
     }
 
-    // CREATE
-    // GET render page
-    @GetMapping(value = {"form/{id}"})
-    public String create(@PathVariable(required = false) Integer id, Model model) {
-        Employee employee = new Employee();
-        User user = new User();
-        employee = employeeService.getById(id);
-        user = userService.getById(id);
-        model.addAttribute("employee", employee);
-        model.addAttribute("user", user);
-        
-
-        return "employee/form";
-    }
 
 
     @PostMapping("save")

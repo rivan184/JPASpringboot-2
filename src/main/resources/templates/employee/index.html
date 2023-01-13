@@ -25,7 +25,7 @@
                         <td th:text = "${employee.birthdate}"></td>
                         <td th:text = "${employee.user.role.name}"></td>
                         <td>
-                            <a class = "btn btn_primary" th:href="@{employee/form/{id}(id = ${employee.id})}">Edit</a>
+                            <a class = "btn btn_primary" th:href="@{employee/password/{id}(id = ${employee.id})}">CHANGE PASSWORD</a>
                             |
                             <form th:action="@{/employee/delete/{id}(id=${employee.getId})}" th:method="post" th:object = ${employee}>
                                 <button type="submit" class="btn btn-danger" onclick= "return confirm('delete this?')">Delete</button>
