@@ -5,7 +5,7 @@
     <body>
         <div class="container">
             <!-- /region/save  region dari initialize requestmapping("region") nya trs savenya buat jalanin postmapping("save"), ${region} buat passing data dri classnya-->
-            <form th:action="@{/employee/save}" method = "post">
+            <form th:action="@{/login/save}" method = "post">
                 <div class="form-group col-md-4">
                     <label for="Email" class="col-form-label">LOGIN EMAIL</label>
                     <input type="text" class = "form-control" id = "email" th:field = "*{employee.email}">

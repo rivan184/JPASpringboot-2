@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Employee;
 import com.example.demo.repositories.EmployeeRepository;
+import com.example.demo.repositories.UserRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     EmployeeRepository employeeRepository;
+
 
     @Override
     public List<Employee> getAll() {
@@ -33,6 +35,13 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Boolean delete(Integer id) {
         employeeRepository.deleteById(id);
         return !employeeRepository.findById(id).isPresent();
+    }
+
+    @Override
+    public Boolean findAccount(String email, String password) {
+        Employee employee = employeeRepository.findAccount(email, password);
+        
+        return employee != null;
     }
     
 }

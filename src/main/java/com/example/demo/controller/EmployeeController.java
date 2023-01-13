@@ -52,11 +52,10 @@ public class EmployeeController {
 
 
     @PostMapping("save")
-    public String save(@ModelAttribute Employee employee, @ModelAttribute User user){
+    public String save(Employee employee,User user){
         Boolean result;
         Boolean result2;
 
-        //service bisa pk 1 bisa 2, kalo 1 di siapin usernya di savenya
 
         result = employeeService.save(employee);
         
