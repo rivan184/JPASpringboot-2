@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,12 +54,13 @@ public class EmployeeController {
 
 
     @PostMapping("save")
-    public String save(Employee employee, User user){
+    public String save(Employee employee){
         Boolean result;
 
         //service bisa pk 1 bisa 2, kalo 1 di siapin usernya di savenya
+        employee.getUser().setRole(roleService.getIdByMaxLevel());
 
-        result = employeeService.save(employee,user);
+        result = employeeService.save(employee);
         
         // user.setId(employee.getId());
         // role.setId(roleService.getIdByLevel());

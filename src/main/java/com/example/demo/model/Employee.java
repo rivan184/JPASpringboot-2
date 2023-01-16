@@ -32,7 +32,7 @@ public class Employee {
     @Column(name = "birthdate")
     private LocalDate birthdate;
 
-    @OneToOne(mappedBy = "employee")
+    @OneToOne(mappedBy = "employee",cascade = CascadeType.PERSIST)
     private User user;
 
     public void setUser(User user) {

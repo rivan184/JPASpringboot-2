@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "password", nullable = false)
@@ -21,7 +22,7 @@ public class User {
     @JoinColumn(name="role_id",referencedColumnName = "id")
     private Role role;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id",referencedColumnName = "id")
     private Employee employee;
 
