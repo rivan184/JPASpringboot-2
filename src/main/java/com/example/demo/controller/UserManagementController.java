@@ -47,7 +47,7 @@ public class UserManagementController {
     }
 
     @PostMapping("login/authenticate")
-    public String authenticate(UserDTO userdto){
+    public String authenticateLogin(UserDTO userdto){
         
         Boolean result = employeeService.findAccount(userdto.getEmail(), userdto.getPassword());
         
@@ -87,7 +87,7 @@ public class UserManagementController {
     }
 
     @PostMapping(value = "employee/password/save/{id}")
-    public String save(@PathVariable(required = false) Integer id, Employee employee, User user){
+    public String saveUpdatedPassword(@PathVariable(required = false) Integer id, User user){
         
         Boolean result = userService.updatePassword(user.getPassword(), id);
 
