@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Employee;
 import com.example.demo.model.User;
+import com.example.demo.model.UserDTO;
 import com.example.demo.services.EmployeeService;
 import com.example.demo.services.RoleService;
 import com.example.demo.services.UserService;
@@ -36,17 +37,19 @@ public class UserManagementController {
 
     @GetMapping(value = "login")
     public String login(Model model){
-        Employee employee = new Employee();
-        User user = new User();
-        model.addAttribute("employee", employee);
-        model.addAttribute("user", user);
+        // Employee employee = new Employee();
+        // User user = new User();
+        UserDTO userdto = new UserDTO();
+        // model.addAttribute("employee", employee);
+        // model.addAttribute("user", user);
+        model.addAttribute("userdto",userdto);
         return "employee/login";
     }
 
-    @PostMapping("login/submit")
-    public String submit(Employee employee,User user){
-       
-        Boolean result = employeeService.findAccount(employee.getEmail(), user.getPassword());
+    @PostMapping("login/authenticate")
+    public String authenticate(UserDTO userdto){
+        
+        Boolean result = employeeService.findAccount(userdto.getEmail(), userdto.getPassword());
         
         
         
@@ -54,7 +57,7 @@ public class UserManagementController {
         if(result){
             return "redirect:/employee";
         } else{
-            return "employee/login";
+            return "redirect:/login";
         }
 
     }
