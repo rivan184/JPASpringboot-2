@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.dto.LoginDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Employee;
 import com.example.demo.model.User;
 import com.example.demo.services.EmployeeService;
@@ -47,11 +48,11 @@ public class UserManagementController {
     @PostMapping("login/authenticate")
     public String authenticateLogin(LoginDTO loginDTO){
         
-        Employee employee = employeeService.findAccount(loginDTO.getEmail(), loginDTO.getPassword());
+        Boolean result = employeeService.findAccount(loginDTO.getEmail(), loginDTO.getPassword());
         
+        // UserDTO userDTO = userService.authenticateLogin(loginDTO.getEmail(), loginDTO.getPassword());
         
-        
-        if(employee!=null){
+        if(result){
             return "redirect:/role";
         } else{
             return "redirect:/login";

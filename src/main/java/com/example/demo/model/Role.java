@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+
 @Entity
 @Table(name = "Role")
-public class Role {
+public class Role implements GrantedAuthority{
     @Id
     @Column(name = "id")
     private Integer id;
@@ -37,5 +39,10 @@ public class Role {
     }
     public Integer getLevel() {
         return level;
+    }
+    @Override
+    public String getAuthority() {
+        // TODO Auto-generated method stub
+        return name;
     }
 }

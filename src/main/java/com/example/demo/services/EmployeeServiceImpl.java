@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.LoginDTO;
 import com.example.demo.model.Employee;
 import com.example.demo.repositories.EmployeeRepository;
 import com.example.demo.repositories.UserRepository;
@@ -30,7 +31,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Boolean save(Employee employee) {
-        employee.getUser().setPassword(passwordEncoder.encode(employee.getUser().getPassword()));
         employeeRepository.save(employee);
 
         return employeeRepository.findById(employee.getId()).isPresent();
@@ -43,10 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee findAccount(String email, String password) {
-        Employee employee = employeeRepository.findAccount(email, password);
+    public Boolean findAccount(String email, String password) {
+        Employee employee = employeeRepository.findAccount(email);
+    
+            
         
-        return employee;
+        return passwordEncoder.matches(password, employee.getUser().getPassword());
     }
 
     @Override
@@ -54,6 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         Integer id = employeeRepository.getIdByEmail(email);
         return id;
     }
+
     
     
 }

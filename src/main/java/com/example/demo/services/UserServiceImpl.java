@@ -5,8 +5,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.config.AppSecurityConfig;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
 
@@ -17,6 +20,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AppSecurityConfig appSecurityConfig;
 
     @Override
     public List<User> getAll() {
@@ -32,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public Boolean save(User user) {
        
         
-        
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return userRepository.findById(user.getId()).isPresent();
     }
@@ -45,8 +53,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updatePassword(String password, Integer id) {
-        userRepository.updatePassword(password, id);
+        userRepository.updatePassword(passwordEncoder.encode(password), id);
         return true;
+    }
+
+    @Override
+    public UserDTO authenticateLogin(String email, String password) {
+
+        return userRepository.authenticateLogin(email, password);
     }
     
     
