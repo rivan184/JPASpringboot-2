@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.dto.LoginDTO;
 import com.example.demo.model.Employee;
 import com.example.demo.model.User;
-import com.example.demo.model.UserDTO;
 import com.example.demo.services.EmployeeService;
-import com.example.demo.services.RoleService;
 import com.example.demo.services.UserService;
 
 @Controller
@@ -22,8 +21,6 @@ public class UserManagementController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleService roleService;
 
     @GetMapping("register")
     public String register(Model model){
@@ -39,23 +36,23 @@ public class UserManagementController {
     public String login(Model model){
         // Employee employee = new Employee();
         // User user = new User();
-        UserDTO userdto = new UserDTO();
+
+        LoginDTO loginDTO = new LoginDTO();
         // model.addAttribute("employee", employee);
         // model.addAttribute("user", user);
-        model.addAttribute("userdto",userdto);
+        model.addAttribute("loginDTO",loginDTO);
         return "employee/login";
     }
 
     @PostMapping("login/authenticate")
-    public String authenticateLogin(UserDTO userdto){
+    public String authenticateLogin(LoginDTO loginDTO){
         
-        Boolean result = employeeService.findAccount(userdto.getEmail(), userdto.getPassword());
-        
-        
+        Employee employee = employeeService.findAccount(loginDTO.getEmail(), loginDTO.getPassword());
         
         
-        if(result){
-            return "redirect:/employee";
+        
+        if(employee!=null){
+            return "redirect:/role";
         } else{
             return "redirect:/login";
         }

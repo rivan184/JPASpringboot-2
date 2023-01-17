@@ -3,6 +3,7 @@ package com.example.demo.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Employee;
@@ -14,6 +15,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public List<Employee> getAll() {
@@ -27,7 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Boolean save(Employee employee) {
+        employee.getUser().setPassword(passwordEncoder.encode(employee.getUser().getPassword()));
         employeeRepository.save(employee);
+
         return employeeRepository.findById(employee.getId()).isPresent();
     }
 
@@ -38,10 +43,10 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Boolean findAccount(String email, String password) {
+    public Employee findAccount(String email, String password) {
         Employee employee = employeeRepository.findAccount(email, password);
         
-        return employee != null;
+        return employee;
     }
 
     @Override

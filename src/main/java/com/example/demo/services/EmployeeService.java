@@ -12,6 +12,6 @@ public interface EmployeeService {
     public Employee getById(Integer id);
     public Boolean save(Employee division);
     public Boolean delete(Integer id);
-    public Boolean findAccount(String email, String password);
+    public Employee findAccount(String email, String password);
     public Integer getIdByEmail(String email);
 }
