@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.plaf.basic.BasicBorders.MarginBorder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,25 +28,28 @@ public class CustomUserDetailService implements UserDetails, UserDetailsService{
     private String password;
     private GrantedAuthority authority;
 
+
     
     @Autowired
     public CustomUserDetailService(EmployeeRepository employeeRepository) {
         // Employee employee = employeeRepository.findAccount(email);
               
-        // this.employeeRepository = employeeRepository;
+        this.employeeRepository = employeeRepository;
         // this.email = employee.getEmail();
         // this.password = employee.getUser().getPassword();
         // this.authority = mapRolestoAuthorities(employee.getUser().getRole());
 
-        this.employeeRepository = employeeRepository;
-        this.email = "muhammad.rivan@batmandiri.com";
-        this.password = "rivan";
-        this.authority = new SimpleGrantedAuthority("Employee");
+        // this.employeeRepository = employeeRepository;
+        // this.email = "muhammad.rivan@batmandiri.com";
+        // this.password = "rivan";
+        // this.authority = new SimpleGrantedAuthority("Employee");
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Employee data = employeeRepository.findAccount(email);
+
+        this.authority = new SimpleGrantedAuthority(data.getUser().getRole().getName());
 
         return new User(data.getEmail(),data.getUser().getPassword(),getAuthorities());
     }
@@ -55,10 +60,10 @@ public class CustomUserDetailService implements UserDetails, UserDetailsService{
         grantedAuthority.add(authority);
         return grantedAuthority;
     }
-    private Collection<GrantedAuthority> mapRolestoAuthorities(Role role){
+    // private Collection<GrantedAuthority> mapRolestoAuthorities(Role role){
 
-        return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
-    }
+    //     return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
+    // }
 
     @Override
     public String getPassword() {
