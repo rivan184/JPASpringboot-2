@@ -1,6 +1,11 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.dto.LoginDTO;
-import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Employee;
 import com.example.demo.model.User;
 import com.example.demo.services.EmployeeService;
@@ -16,12 +20,19 @@ import com.example.demo.services.UserService;
 
 @Controller
 public class UserManagementController {
-    @Autowired
+    
     private EmployeeService employeeService;
     
-    @Autowired
     private UserService userService;
 
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    public UserManagementController(EmployeeService employeeService, UserService userService,AuthenticationManager authenticationManager) {
+        this.employeeService = employeeService;
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @GetMapping("register")
     public String register(Model model){
@@ -47,17 +58,24 @@ public class UserManagementController {
 
     @PostMapping("login/authenticate")
     public String authenticateLogin(LoginDTO loginDTO){
-        
-        Boolean result = employeeService.findAccount(loginDTO.getEmail(), loginDTO.getPassword());
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+        // Boolean result = employeeService.findAccount(loginDTO.getEmail(), loginDTO.getPassword());
+
+
+        // Employee employee = new Employee();
+        // employee = employeeService.loadUserByEmail(loginDTO.getEmail(),loginDTO.getPassword());
         
         // UserDTO userDTO = userService.authenticateLogin(loginDTO.getEmail(), loginDTO.getPassword());
-        
-        if(result){
-            return "redirect:/role";
-        } else{
-            return "redirect:/login";
-        }
 
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+ 
+        // if(result){
+        //     return "redirect:/role";
+        // } else{
+        //     return "redirect:/login";
+        // }
+        
+        return "redirect:/role";
     }
 
     // CREATE

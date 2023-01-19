@@ -1,13 +1,17 @@
 package com.example.demo.model;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
+
+import org.springframework.security.core.GrantedAuthority;
 
 
 @Entity
 @Table(name = "User")
-public class User {
+public class User{
     @Id
     @Column(name = "id")
     private Integer id;
@@ -16,7 +20,6 @@ public class User {
     private String password;
 
     
-
     @ManyToOne
     @JoinColumn(name="role_id",referencedColumnName = "id")
     private Role role;
@@ -51,5 +54,4 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
-
 }

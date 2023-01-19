@@ -1,16 +1,31 @@
 package com.example.demo.config;
 
+import java.lang.reflect.Constructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+
 @Configuration
 public class AppSecurityConfig {
+
+    
+    
+    // CustomUserDetailService userDetailService;
+    // @Autowired
+    // public AppSecurityConfig(CustomUserDetailService userDetailService){
+    //     this.userDetailService = userDetailService;
+    // }
+    
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
         return auth.getAuthenticationManager();
@@ -27,7 +42,7 @@ public class AppSecurityConfig {
                     .and()
                     .formLogin()
                     .loginPage("/login")
-                    .loginProcessingUrl("/authenticateUser")
+                    .loginProcessingUrl("/authenticate")
                     .permitAll()
                     .and()
                     .logout();
@@ -35,11 +50,13 @@ public class AppSecurityConfig {
                 throw new RuntimeException(e);
             }    
         });
+        
         return http.build();
     }
 
     @Bean
     public PasswordEncoder PasswordHashing() {
+        
         return new BCryptPasswordEncoder();
     }
 }
