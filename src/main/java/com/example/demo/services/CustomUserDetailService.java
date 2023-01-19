@@ -1,11 +1,8 @@
 package com.example.demo.services;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.swing.plaf.basic.BasicBorders.MarginBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Employee;
-import com.example.demo.model.Role;
 import com.example.demo.repositories.EmployeeRepository;
 
 @Service
@@ -49,7 +45,7 @@ public class CustomUserDetailService implements UserDetails, UserDetailsService{
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Employee data = employeeRepository.findAccount(email);
 
-        this.authority = new SimpleGrantedAuthority(data.getUser().getRole().getName());
+        authority = new SimpleGrantedAuthority(data.getUser().getRole().getName());
 
         return new User(data.getEmail(),data.getUser().getPassword(),getAuthorities());
     }
