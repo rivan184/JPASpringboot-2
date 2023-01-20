@@ -24,16 +24,16 @@ public class User{
     @JoinColumn(name="role_id",referencedColumnName = "id")
     private Role role;
 
-    @OneToOne
-    @JoinColumn(name = "id",referencedColumnName = "id")
-    private Employee employee;
+    // @OneToOne
+    // @JoinColumn(name = "id",referencedColumnName = "id")
+    // private Employee employee;
 
-    public Employee getEmployee() {
-        return employee;
-    }
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
+    // public Employee getEmployee() {
+    //     return employee;
+    // }
+    // public void setEmployee(Employee employee) {
+    //     this.employee = employee;
+    // }
     
     public void setPassword(String password) {
         this.password = password;
